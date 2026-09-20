@@ -249,6 +249,7 @@ button{font-family:inherit;}
   display:flex; align-items:center; justify-content:center;
   padding:20px; z-index:30; backdrop-filter:blur(2px);
 }
+.overlay[hidden]{display:none;}
 .auth-card{
   background:var(--surface);
   border-radius:20px;
