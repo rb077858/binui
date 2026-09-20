@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /requests/{requestId} {
+
+      // Anyone (even not signed in) can create a new maintenance request,
+      // as long as it only contains the expected fields and a valid room number.
+      allow create: if request.resource.data.keys().hasOnly(['room', 'status', 'createdAt'])
+                    && request.resource.data.room is string
+                    && request.resource.data.room.size() == 2
+                    && request.resource.data.status == 'pending'
+                    && request.resource.data.createdAt == request.time;
+
+      // Only the admin Google account can read, update (mark done/undone)
+      // or delete requests.
+      allow read, update, delete: if request.auth != null
+                    && request.auth.token.email == 'rb077858@gmail.com'
+                    && request.auth.token.email_verified == true;
+    }
+  }
+}
