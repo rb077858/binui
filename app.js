@@ -87,7 +87,11 @@ const auth = getAuth(app);
     });
   });
 
-  function getCombo() { return "" + tensWheel.value + unitsWheel.value; }
+  // Layout is RTL, so the first wheel in the markup (id="wheelTens") renders
+  // on the RIGHT and the second (id="wheelUnits") renders on the LEFT.
+  // The room number should read left-to-right like any number, so the left
+  // wheel is the first digit and the right wheel is the second digit.
+  function getCombo() { return "" + unitsWheel.value + tensWheel.value; }
 
   /* ---------------- Toast ---------------- */
   var toastEl = document.getElementById("toast");
